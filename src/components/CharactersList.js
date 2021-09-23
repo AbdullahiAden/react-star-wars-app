@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Card, Grid } from "semantic-ui-react";
+import Character from "./Character";
 
 const CharactersList = () => {
   const [characters, setCharacters] = useState([]);
@@ -15,32 +16,21 @@ const CharactersList = () => {
     fetchCharacters();
   }, []);
 
-  console.log(characters);
+  //   console.log(characters);
   return (
-    <>
+    <div>
       <h1>Characters</h1>
-      <Grid columns={3}>
+      <button className="btn btn-sm"> start</button>
+      <div className="row">
         {/* loop through characters */}
 
         {characters.map((character, index) => {
-          return (
-            <Grid.Column key={index}>
-              <Card>
-                <Card.Content>
-                  <Card.Header>{character.name}</Card.Header>
-                  <Card.Description>
-                    <strong>Height</strong>
-                    <p>{character.height}</p>
-                    <strong>Mass</strong>
-                    <p>{character.mass}</p>
-                  </Card.Description>
-                </Card.Content>
-              </Card>
-            </Grid.Column>
-          );
+          // console.log(character);
+          // pass prop to character component
+          return <Character characterData={character} key={index} />;
         })}
-      </Grid>
-    </>
+      </div>
+    </div>
   );
 };
 

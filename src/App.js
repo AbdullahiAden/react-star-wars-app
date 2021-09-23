@@ -1,9 +1,12 @@
 import CharactersList from "./components/CharactersList";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 function App() {
   return (
     <>
-      <CharactersList />
+      <div className="container ">
+        <CharactersList />
+      </div>
     </>
   );
 }
