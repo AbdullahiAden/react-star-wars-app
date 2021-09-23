@@ -1,6 +1,6 @@
 import React from "react";
 
-const Character = () => {
+const Character = (data) => {
   return <div></div>;
 };
 
