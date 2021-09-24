@@ -1,7 +1,8 @@
 import { Switch, Route } from "react-router-dom";
 import CharactersList from "./components/CharactersList";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 import CharacterDetails from "./components/CharacterDetails";
+import { Pagination } from "semantic-ui-react";
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
             component={CharacterDetails}
           ></Route>
         </Switch>
+
+        {/* <Pagination /> */}
       </div>
     </>
   );
