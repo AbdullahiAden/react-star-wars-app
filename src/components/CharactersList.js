@@ -20,7 +20,6 @@ const CharactersList = () => {
   return (
     <div>
       <h1>Characters</h1>
-      <button className="btn btn-sm"> start</button>
       <div className="row">
         {/* loop through characters */}
 

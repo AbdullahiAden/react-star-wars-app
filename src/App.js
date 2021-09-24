@@ -1,11 +1,24 @@
+import { Switch, Route } from "react-router-dom";
 import CharactersList from "./components/CharactersList";
 import "bootstrap/dist/css/bootstrap.min.css";
+import CharacterDetails from "./components/CharacterDetails";
 
 function App() {
   return (
     <>
       <div className="container ">
-        <CharactersList />
+        {/* <CharactersList /> */}
+
+        <Switch>
+          <Route exact path="/">
+            <CharactersList />
+          </Route>
+
+          <Route
+            path="/characterdetails/:name"
+            component={CharacterDetails}
+          ></Route>
+        </Switch>
       </div>
     </>
   );
