@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 // object destsructure
 const Character = ({ characterData }) => {
   const [charData, setCharData] = useState([]);
-  // console.log(characterData);
+  console.log(characterData);
 
   return (
     //   single character stylings
@@ -16,6 +16,14 @@ const Character = ({ characterData }) => {
           {characterData.name}
         </Link>
       </h2>
+      <div>
+        <strong>height</strong>
+        <p>{characterData.height}</p>
+      </div>
+      <div>
+        <strong>mass</strong>
+        <p>{characterData.mass}</p>
+      </div>
     </div>
   );
 };

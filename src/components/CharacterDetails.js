@@ -4,13 +4,16 @@ const CharacterDetails = (props) => {
   const [charDetails, setCharDetails] = useState([]);
   // const url = `https://swapi.dev/api/people/?page=2`
 
+  // fetch characters
+  async function fetchCharacters(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    setCharDetails(data.results);
+    console.log(data);
+  }
+
   useEffect(() => {
     // * fetch all  characters
-    // * metch name with single character
-    const characterName = props.match.params.name;
-
-    console.log(charDetails);
-    setCharDetails(characterName);
   }, []);
 
   return (

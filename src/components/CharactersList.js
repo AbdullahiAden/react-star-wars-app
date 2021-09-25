@@ -5,17 +5,30 @@ import Character from "./Character";
 
 const CharactersList = () => {
   const [characters, setCharacters] = useState([]);
-  const [currentPage, setCurrentPage] = useState([]);
-  const [nextPage, setNextPage] = useState([]);
-
-  let nextPageUrl;
 
   // fetch characters
   async function fetchCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
     setCharacters(data.results);
-    nextPageUrl = data.next;
+    // console.log(data);
+  }
+  async function fetchPage1() {
+    const response = await fetch("https://swapi.dev/api/people");
+    const data = await response.json();
+    setCharacters(data.results);
+    // console.log(data);
+  }
+  async function fetchPage2() {
+    const response = await fetch("https://swapi.dev/api/people/?page=2");
+    const data = await response.json();
+    setCharacters(data.results);
+    // console.log(data);
+  }
+  async function fetchPage3() {
+    const response = await fetch("https://swapi.dev/api/people/?page=3");
+    const data = await response.json();
+    setCharacters(data.results);
     // console.log(data);
   }
   useEffect(() => {
@@ -23,15 +36,6 @@ const CharactersList = () => {
     // fetchNextCharacters(nextPage);
   }, []);
 
-  //  fetch nextpage
-  async function fetchNextCharacters() {
-    const res = await fetch(nextPageUrl);
-    const data = await res.json();
-    setNextPage(data);
-    console.log(data);
-  }
-
-  // console.log(characters);
   return (
     <div>
       <h1>Characters</h1>
@@ -43,13 +47,15 @@ const CharactersList = () => {
         {characters.map((character, index) => {
           // console.log(character);
           // pass prop to character component
+          // return <Character characterData={character} key={index} />;
           return <Character characterData={character} key={index} />;
         })}
       </div>
 
-      {/* * PAGINATION */}
-      <div className="container">
-        <button onClick={fetchNextCharacters}>Next</button>
+      <div>
+        <button onClick={fetchPage1}>1</button>
+        <button onClick={fetchPage2}>2</button>
+        <button onClick={fetchPage3}>3</button>
       </div>
     </div>
   );
