@@ -20,7 +20,7 @@ const CharacterDetails = (props) => {
 
   return (
     <div>
-      <h2>Character details</h2>
+      <h3>Character details</h3>
 
       <div className="shadow ">
         <h2>{charDetails.name}</h2>
@@ -32,6 +32,7 @@ const CharacterDetails = (props) => {
         <p>{charDetails.hair_color}</p>
         <strong>skin color</strong>
         <p>{charDetails.skin_color}</p>
+        <p>{charDetails.url}</p>
       </div>
     </div>
   );
