@@ -13,7 +13,6 @@ const Character = ({ characterData }) => {
       <h2>
         <Link to={`${characterData.url}`}>{characterData.name}</Link>
       </h2>
-      {/* ______FIX MODAL HERE */}
 
       {/* ***modal popup */}
       <button

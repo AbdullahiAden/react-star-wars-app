@@ -51,7 +51,7 @@ const CharactersList = () => {
 
   return (
     <div>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      {/* <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <button
           class="navbar-toggler"
           type="button"
@@ -64,26 +64,10 @@ const CharactersList = () => {
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand" href="#">
-            Hidden brand
+          <a class="navbar-brand" href="/">
+            <h2>Star Wars</h2>
           </a>
-          <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-            <li class="nav-item active">
-              <a class="nav-link" href="#">
-                Home <span class="sr-only">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                Link
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link disabled" href="#">
-                Disabled
-              </a>
-            </li>
-          </ul>
+
           <form class="form-inline my-2 my-lg-0">
             <input
               class="form-control mr-sm-2"
@@ -96,7 +80,7 @@ const CharactersList = () => {
             </button>
           </form>
         </div>
-      </nav>
+      </nav> */}
       <h1>Star wars Characters</h1>
       <div className="row">
         {/* loop through characters */}
