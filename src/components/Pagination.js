@@ -9,7 +9,18 @@ const Pagination = () => {
   let previous;
   let nextPageUrl;
 
-  // fetch next page characters
+  // fetch nextcharacters
+  async function fetchCharacters(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    setCharacters(data.results);
+    nextPageUrl = data.next;
+    console.log(data);
+  }
+  useEffect(() => {
+    fetchCharacters("https://swapi.dev/api/people/?page=2");
+    // fetchCharacters(nextPageUrl);
+  }, []);
 
   return (
     <div className="container">

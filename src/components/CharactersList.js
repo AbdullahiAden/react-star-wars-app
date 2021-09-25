@@ -6,12 +6,16 @@ import Character from "./Character";
 const CharactersList = () => {
   const [characters, setCharacters] = useState([]);
 
+  let next;
+
   // fetch characters
   async function fetchCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
     setCharacters(data.results);
-    // console.log(data);
+
+    console.log(data);
+    next = data.next;
   }
   async function fetchPage1() {
     const response = await fetch("https://swapi.dev/api/people");
@@ -27,6 +31,15 @@ const CharactersList = () => {
   }
   async function fetchPage3() {
     const response = await fetch("https://swapi.dev/api/people/?page=3");
+    const data = await response.json();
+    setCharacters(data.results);
+    // console.log(data);
+  }
+
+  async function fetchNextPage(pageNumber) {
+    const response = await fetch(
+      `https://swapi.dev/api/people/?page=${pageNumber}`
+    );
     const data = await response.json();
     setCharacters(data.results);
     // console.log(data);
@@ -56,6 +69,7 @@ const CharactersList = () => {
         <button onClick={fetchPage1}>1</button>
         <button onClick={fetchPage2}>2</button>
         <button onClick={fetchPage3}>3</button>
+        {/* <button onClick={fetchNextPage(4)}>4</button> */}
       </div>
     </div>
   );

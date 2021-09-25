@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 // object destsructure
 const Character = ({ characterData }) => {
   const [charData, setCharData] = useState([]);
+  console.log("----");
   console.log(characterData);
 
   return (
@@ -12,18 +13,8 @@ const Character = ({ characterData }) => {
     <div className="col-lg-4  shadow  p-1">
       <h2></h2>
       <h2>
-        <Link to={`/characterDetails/${characterData.name}`}>
-          {characterData.name}
-        </Link>
+        <Link to={`${characterData.url}`}>{characterData.name}</Link>
       </h2>
-      <div>
-        <strong>height</strong>
-        <p>{characterData.height}</p>
-      </div>
-      <div>
-        <strong>mass</strong>
-        <p>{characterData.mass}</p>
-      </div>
     </div>
   );
 };

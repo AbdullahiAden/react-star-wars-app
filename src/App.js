@@ -15,10 +15,7 @@ function App() {
             <CharactersList />
           </Route>
 
-          <Route
-            path="/characterdetails/:name"
-            component={CharacterDetails}
-          ></Route>
+          <Route path="/:url" component={CharacterDetails}></Route>
         </Switch>
 
         {/* <Pagination /> */}
