@@ -5,20 +5,14 @@ import { Link } from "react-router-dom";
 // object destsructure
 const Character = ({ characterData }) => {
   const [charData, setCharData] = useState([]);
-  //   console.log(characterData);
+  // console.log(characterData);
 
   return (
     //   single character stylings
     <div className="col-lg-4  shadow  p-1">
       <h2></h2>
       <h2>
-        <Link
-          style={{
-            textDecoration: "none",
-            fontWeight: "bold",
-          }}
-          to={`/characterDetails/${characterData.name}`}
-        >
+        <Link to={`/characterDetails/${characterData.name}`}>
           {characterData.name}
         </Link>
       </h2>
