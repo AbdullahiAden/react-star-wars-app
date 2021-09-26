@@ -6,27 +6,47 @@ import Navbar from "./Navbar";
 import Modal from "./Modal";
 
 const CharactersList = ({ people }) => {
-  // const [characters, setCharacters] = useState(null);
+  const [char, setChar] = useState(null);
   // setCharacters(people.results);
   let characters = [];
   characters = people.results;
 
-  console.log(characters);
+  const next = people.next;
+
+  // fetch characters
+  async function fetchNextPage(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    setChar(data);
+    // console.log(data);
+  }
+
+  console.log(people);
+  console.log(next);
   return (
     <div>
       <Navbar />
       <h1>Star wars Characters</h1>
       <div className="row">
-        {characters.map((character) => {
-          return (
-            <div className="col-lg-4  shadow  p-1">
-              <h2>
-                <Link to={`${character.url}`}>{character.name}</Link>
-              </h2>
-            </div>
-          );
-        })}
+        {!characters ? (
+          <p>Loading</p>
+        ) : (
+          characters.map((character) => {
+            return (
+              <div className="col-lg-4  shadow  p-1">
+                <h2>
+                  <Link to={`${character.url}`}>{character.name}</Link>
+                </h2>
+              </div>
+            );
+          })
+        )}
       </div>
+
+      <button className="btn btn-outline-primary">{next}</button>
+      <Link to={""} className="btn btn-outline-primary">
+        2
+      </Link>
     </div>
   );
 };
