@@ -1,25 +1,12 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 
-// recieve object from characterList
-// object destsructure
-const Character = ({ characterData }) => {
-  const [charData, setCharData] = useState([]);
-  const char = characterData;
-  console.log(char);
-
-  function getClickedChar() {}
-
+const Modal = (character) => {
+  console.log(character.character);
   return (
-    //   single character stylings
-    <div className="col-lg-4  shadow  p-1">
-      <h2>
-        <Link to={`${characterData.url}`}>{characterData.name}</Link>
-      </h2>
-
+    <div>
       {/* ***modal popup */}
 
-      <button
+      {/* <button
         type="button"
         class="btn btn-primary"
         data-toggle="modal"
@@ -27,13 +14,7 @@ const Character = ({ characterData }) => {
         // value={characterData.url}
       >
         View More
-        <Link
-          to={{
-            pathname: "/modal",
-            state: { modal: true },
-          }}
-        ></Link>
-      </button>
+      </button> */}
 
       <div
         class="modal fade"
@@ -54,22 +35,24 @@ const Character = ({ characterData }) => {
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                value={characterData}
+                value={character}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <h2>{characterData.name}</h2>
-              <strong>height</strong>
-              <p>{characterData.height}</p>
-              <strong>mass</strong>
-              <p>{characterData.mass}</p>
-              <strong>hair color</strong>
-              <p>{characterData.hair_color}</p>
-              <strong>skin color</strong>
-              <p>{characterData.skin_color}</p>
-              <p>{characterData.url}</p>
+              <div>
+                <h2>{character.name}</h2>
+                <strong>height</strong>
+                <p>{character.height}</p>
+                <strong>mass</strong>
+                <p>{character.mass}</p>
+                <strong>hair color</strong>
+                <p>{character.hair_color}</p>
+                <strong>skin color</strong>
+                <p>{character.skin_color}</p>
+                <p>{character.url}</p>
+              </div>
             </div>
             <div class="modal-footer">
               <button
@@ -87,4 +70,4 @@ const Character = ({ characterData }) => {
   );
 };
 
-export default Character;
+export default Modal;

@@ -10,9 +10,9 @@ const CharacterDetails = (props) => {
   // fetch characters
   async function fetchNextCharacters() {
     const response = await fetch(newCharacterUrl);
-    const data = await response.json();
-    setCharDetails(data);
-    console.log(data);
+    const SingleChardata = await response.json();
+    setCharDetails(SingleChardata);
+    console.log(SingleChardata);
   }
   useEffect(() => {
     fetchNextCharacters();
@@ -22,6 +22,7 @@ const CharacterDetails = (props) => {
     <div>
       <h3>Character details</h3>
 
+      {/* *____________________ONLY SHOWING FIRST CHAR DETAILS___________________ */}
       <div className="shadow ">
         <h2>{charDetails.name}</h2>
         <strong>height</strong>
