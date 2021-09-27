@@ -6,15 +6,24 @@ import Navbar from "./Navbar";
 import Modal from "./Modal";
 
 const CharactersList = ({ people }) => {
-  const [char, setChar] = useState(null);
+  const [char, setChar] = useState([]);
   // setCharacters(people.results);
   let characters = [];
   characters = people.results;
 
-  const next = people.next;
+  // const next = people.next;
 
   // fetch characters
   async function fetchNextPage(url) {
+    const response = await fetch(url);
+    const data = await response.json();
+    // setChar(data);
+    console.log(data.results);
+    characters = [];
+    characters = data.results;
+    console.log(characters);
+  }
+  async function fetchPreviousPage(url) {
     const response = await fetch(url);
     const data = await response.json();
     setChar(data);
@@ -22,7 +31,7 @@ const CharactersList = ({ people }) => {
   }
 
   console.log(people);
-  console.log(next);
+  // console.log(next);
   return (
     <div>
       <Navbar />
@@ -43,10 +52,18 @@ const CharactersList = ({ people }) => {
         )}
       </div>
 
-      <button className="btn btn-outline-primary">{next}</button>
-      <Link to={""} className="btn btn-outline-primary">
-        2
-      </Link>
+      {/* loop thorugh people data, as long there is next, get the last digit 
+      and make it pagination number */}
+
+      <button
+        type="submit"
+        onClick={() => {
+          fetchNextPage(people.next);
+        }}
+        className="btn btn-outline-primary"
+      >
+        Next
+      </button>
     </div>
   );
 };

@@ -14,7 +14,7 @@ function App() {
   async function fetchCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
-    setPeople(data);
+    // setPeople(data);
     // console.log(data);
   }
 
@@ -39,7 +39,8 @@ function App() {
             <CharactersList people={people} />
           </Route>
 
-          <Route path="/:url" component={CharacterDetails}></Route>
+          <Route path="/:nextUrl" component={CharacterDetails}></Route>
+          <Route path="/:url" component={Pagination}></Route>
           <Route path="/modal" component={Modal}></Route>
         </Switch>
 
