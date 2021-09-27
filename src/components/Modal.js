@@ -6,7 +6,7 @@ const Modal = (character) => {
     <div>
       {/* ***modal popup */}
 
-      {/* <button
+      <button
         type="button"
         class="btn btn-primary"
         data-toggle="modal"
@@ -14,7 +14,7 @@ const Modal = (character) => {
         // value={characterData.url}
       >
         View More
-      </button> */}
+      </button>
 
       <div
         class="modal fade"

@@ -1,4 +1,4 @@
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import CharactersList from "./components/CharactersList";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import CharacterDetails from "./components/CharacterDetails";
@@ -9,13 +9,15 @@ import Modal from "./components/Modal";
 
 function App() {
   const [people, setPeople] = useState([]);
+  const [characters, setCharacters] = useState([]);
 
   // fetch characters
   async function fetchCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
     setPeople(data);
-    // console.log(data);
+    setCharacters(data.results);
+    // console.log(people);
   }
 
   useEffect(() => {
@@ -33,14 +35,42 @@ function App() {
   // }
   return (
     <>
+      <div className="row">
+        {!people ? (
+          <p>Loading</p>
+        ) : (
+          characters.map((character) => {
+            return (
+              <div className="col-lg-4  shadow  p-1">
+                <h2>
+                  <Link to={`${character.url}`}>{character.name}</Link>
+                </h2>
+              </div>
+            );
+          })
+        )}
+      </div>
+
+      {people && (
+        <button
+          type="submit"
+          onClick={() => {
+            fetchCharacters(people.next);
+          }}
+          className="btn btn-outline-primary"
+        >
+          Next
+        </button>
+      )}
+
       <div className="container ">
         <Switch>
-          <Route exact path="/">
+          {/* <Route exact path="/">
             <CharactersList people={people} />
-          </Route>
+          </Route> */}
 
-          <Route path="/:nextUrl" component={CharacterDetails}></Route>
-          <Route path="/:url" component={Pagination}></Route>
+          <Route path="/:url" component={CharacterDetails}></Route>
+          {/* <Route path="/:url" component={Pagination}></Route> */}
           <Route path="/modal" component={Modal}></Route>
         </Switch>
 
