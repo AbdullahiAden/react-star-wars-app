@@ -14,7 +14,7 @@ function App() {
   async function fetchCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
-    // setPeople(data);
+    setPeople(data);
     // console.log(data);
   }
 

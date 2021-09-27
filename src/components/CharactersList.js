@@ -18,7 +18,7 @@ const CharactersList = ({ people }) => {
     const response = await fetch(url);
     const data = await response.json();
     // setChar(data);
-    console.log(data.results);
+    // console.log(data.results);
     characters = [];
     characters = data.results;
     console.log(characters);
@@ -50,20 +50,22 @@ const CharactersList = ({ people }) => {
             );
           })
         )}
+
+        {characters && (
+          <button
+            type="submit"
+            onClick={() => {
+              fetchNextPage(people.next);
+            }}
+            className="btn btn-outline-primary"
+          >
+            Next
+          </button>
+        )}
       </div>
 
       {/* loop thorugh people data, as long there is next, get the last digit 
       and make it pagination number */}
-
-      <button
-        type="submit"
-        onClick={() => {
-          fetchNextPage(people.next);
-        }}
-        className="btn btn-outline-primary"
-      >
-        Next
-      </button>
     </div>
   );
 };
