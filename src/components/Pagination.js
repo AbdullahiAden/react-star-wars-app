@@ -18,7 +18,7 @@ const Pagination = (people) => {
     characters = data.results;
     console.log(characters);
   }
-  return <div></div>;
+  return <h1>Pagination</h1>;
 };
 
 export default Pagination;
