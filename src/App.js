@@ -47,7 +47,7 @@ function App() {
         {!people.results ? (
           <p>Loading</p>
         ) : (
-          characters.map((character) => {
+          characters.map((character, index) => {
             return (
               <div className="col-lg-4  shadow  p-1">
                 <h2>
@@ -56,12 +56,12 @@ function App() {
                     className="btn btn-primary"
                     type="submit"
                     onClick={() => {
-                      fetchSingleCharacter(character.url);
+                      fetchSingleCharacter(characters[index].url);
                     }}
                     data-toggle="modal"
                     data-target="#exampleModal"
                   >
-                    {character.name}
+                    {characters[index].name}
                   </button>
                 </h2>
                 <p>{character.url}</p>
@@ -85,23 +85,23 @@ function App() {
                           class="close"
                           data-dismiss="modal"
                           aria-label="Close"
-                          value={character}
+                          // value={character}
                         >
                           <span aria-hidden="true">&times;</span>
                         </button>
                       </div>
                       <div class="modal-body">
                         <div>
-                          <h2>{character.name}</h2>
+                          <h2>{charDetails.name}</h2>
                           <strong>height</strong>
-                          <p>{character.height}</p>
+                          <p>{charDetails.height}</p>
                           <strong>mass</strong>
-                          <p>{character.mass}</p>
+                          <p>{charDetails.mass}</p>
                           <strong>hair color</strong>
-                          <p>{character.hair_color}</p>
+                          <p>{charDetails.hair_color}</p>
                           <strong>skin color</strong>
-                          <p>{character.skin_color}</p>
-                          <p>{character.url}</p>
+                          <p>{charDetails.skin_color}</p>
+                          <p>{charDetails.url}</p>
                         </div>
                       </div>
                       <div class="modal-footer">
