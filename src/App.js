@@ -36,7 +36,7 @@ function App() {
   return (
     <>
       <div className="row">
-        {!people ? (
+        {!people.results ? (
           <p>Loading</p>
         ) : (
           characters.map((character) => {
@@ -51,18 +51,29 @@ function App() {
         )}
       </div>
 
-      {people && (
+      {people.previous && (
+        <button
+          type="submit"
+          onClick={() => {
+            fetchCharacters(people.previous);
+          }}
+          className="btn btn-outline-primary"
+        >
+          Previous
+        </button>
+      )}
+
+      {people.next && (
         <button
           type="submit"
           onClick={() => {
             fetchCharacters(people.next);
           }}
-          className="btn btn-outline-primary"
+          className="btn btn-outline-primary m-2"
         >
           Next
         </button>
       )}
-
       <div className="container ">
         <Switch>
           {/* <Route exact path="/">
