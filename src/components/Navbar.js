@@ -1,27 +1,23 @@
 import React, { useState } from "react";
 import { Search } from "semantic-ui-react";
 
-const Navbar = (people) => {
+const Navbar = ({ characters }) => {
   const [searchedChar, setSearchedChar] = useState([]);
-  const [currentPageChar, setCurrentPageChar] = useState([]);
-  // const [q, setQ] = useState([]);
-  setCurrentPageChar(people.data);
+  const [charDetails, setCharDetails] = useState([]);
 
-  // get the searched word,
-  {
-    // console.log(people.data);
-    console.log(searchedChar);
+  console.log(characters);
+  // console.log(searchedChar);
+  async function fetchSingleCharacter(singleUrl) {
+    const response = await fetch(singleUrl);
+    const data = await response.json();
+    setCharDetails(data);
+    console.log(charDetails);
   }
-
-  // loop through data.results, if searched word is found, get its url,
-
-  // if not fetch next page, search, if found render
-
   return (
     <div>
       <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <button
-          class="navbar-toggler"
+          class="navbar-toggler navbar-dark"
           type="button"
           data-toggle="collapse"
           data-target="#navbarTogglerDemo01"
@@ -29,22 +25,22 @@ const Navbar = (people) => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon  "></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
           <a class="navbar-brand text-light " href="/">
             <h2>Star Wars</h2>
           </a>
 
-          <form class="form-inline my-2 my-lg-0">
+          <form class="form-inline my-2 my-lg-0 " action="/searchedChar">
             <input
               class="form-control mr-sm-2"
               type="search"
-              // value={searchedChar}
               onChange={(e) => setSearchedChar(e.target.value)}
               placeholder="Search"
               aria-label="Search"
             />
+
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
               Search
             </button>
@@ -55,6 +51,29 @@ const Navbar = (people) => {
       {currentPageChar.map((s) => {
         console.log(s);
       })} */}
+
+      {/* 
+         {!searchedChar && (
+                  <div>
+                    {searchedChar === character.name ? (
+                      <div>
+                        <button
+                          className="btn btn-primary"
+                          type="submit"
+                          onClick={() => {
+                            fetchSingleCharacter(characters[index].url);
+                          }}
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                        >
+                          {characters[index].name}
+                        </button>
+                      </div>
+                    ) : (
+                      <p>{searchedChar + "Not Found"}</p>
+                    )}
+                  </div>
+                )}   */}
     </div>
   );
 };
