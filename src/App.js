@@ -11,6 +11,7 @@ function App() {
   const [people, setPeople] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [charDetails, setCharDetails] = useState([]);
+  const [searchedChar, setSearchedChar] = useState([]);
 
   // fetch characters
   async function fetchCharacters(url) {
@@ -18,22 +19,13 @@ function App() {
     const data = await response.json();
     setPeople(data);
     setCharacters(data.results);
-    // console.log(people);
+    console.log(data);
   }
 
   useEffect(() => {
     fetchCharacters("https://swapi.dev/api/people");
   }, []);
 
-  // fetch characters
-  // function fetchSingleCharacter(singleUrl) {
-  //   const characterName = singleUrl.location.pathname;
-  //   const newCharacterUrl = characterName.substring(1);
-
-  //   // const response = await fetch(newCharacterUrl);
-  //   // const SingleChardata = await response.json();
-  //   console.log(singleUrl);
-  // }
   async function fetchSingleCharacter(singleUrl) {
     const response = await fetch(singleUrl);
     const data = await response.json();
@@ -43,6 +35,41 @@ function App() {
 
   return (
     <>
+      {/* <Navbar data={people} /> */}
+
+      <nav class="navbar navbar-expand-lg navbar-light bg-dark">
+        <button
+          class="navbar-toggler navbar-dark"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarTogglerDemo01"
+          aria-controls="navbarTogglerDemo01"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon  "></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+          <a class="navbar-brand text-light " href="/">
+            <h2>Star Wars</h2>
+          </a>
+
+          <form class="form-inline my-2 my-lg-0 " action="/searchedChar">
+            <input
+              class="form-control mr-sm-2"
+              type="search"
+              onChange={(e) => setSearchedChar(e.target.value)}
+              placeholder="Search"
+              aria-label="Search"
+            />
+
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+              Search
+            </button>
+          </form>
+        </div>
+      </nav>
+      {/* Rendering characters */}
       <div className="row">
         {!people.results ? (
           <p>Loading</p>
@@ -50,21 +77,45 @@ function App() {
           characters.map((character, index) => {
             return (
               <div className="col-lg-4  shadow  p-1">
-                <h2>
-                  {/* *Make module pop up here, when link is clicked, which shows more  */}
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    onClick={() => {
-                      fetchSingleCharacter(characters[index].url);
-                    }}
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                  >
-                    {characters[index].name}
-                  </button>
-                </h2>
-                <p>{character.url}</p>
+                {/* if there is no searched character, display all */}
+                {!searchedChar ? (
+                  <h2>
+                    {/* *Make module pop up here, when link is clicked, which shows more  */}
+                    <button
+                      className="btn btn-primary"
+                      type="submit"
+                      onClick={() => {
+                        fetchSingleCharacter(characters[index].url);
+                      }}
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      {characters[index].name}
+                    </button>
+
+                    <p>{character.url}</p>
+                  </h2>
+                ) : (
+                  <div>
+                    {searchedChar === character.name ? (
+                      <div>
+                        <button
+                          className="btn btn-primary"
+                          type="submit"
+                          onClick={() => {
+                            fetchSingleCharacter(characters[index].url);
+                          }}
+                          data-toggle="modal"
+                          data-target="#exampleModal"
+                        >
+                          {characters[index].name}
+                        </button>
+                      </div>
+                    ) : (
+                      <p>{searchedChar + "Not Found"}</p>
+                    )}
+                  </div>
+                )}
 
                 <div
                   class="modal fade"
@@ -146,18 +197,34 @@ function App() {
         </button>
       )}
       <div className="container ">
-        <Switch>
-          {/* <Route exact path="/">
-            <CharactersList people={people} />
-          </Route> */}
+        {/* // get the searched word, */}
+        {/* {console.log(searchedChar)} */}
 
-          {/* <Route path="/:url" component={CharacterDetails}></Route> */}
-          {/* <Route path="/:url" component={Pagination}></Route> */}
-          <Route path="/modal" component={Modal}></Route>
-        </Switch>
+        {/* // loop through data.results, if searched word is found, get its url,*/}
+        {/* {characters.map((s) => {
+          // console.log(s);
+          if (searchedChar === s.name) {
+            console.log(s.url);
+            <h2>
+              <button
+                className="btn btn-primary"
+                type="submit"
+                onClick={() => {
+                  fetchSingleCharacter(s.url);
+                }}
+              >
+                {s.name}
+              </button>
+            </h2>;
+          }
+        })} */}
 
-        {/* <Pagination /> */}
+        {/* if not fetch next page, search, if found render */}
       </div>
+
+      {/* <Switch>
+        <Route path="/searchedchar" component={}></Route>
+      </Switch> */}
     </>
   );
 }

@@ -1,7 +1,21 @@
 import React, { useState } from "react";
+import { Search } from "semantic-ui-react";
 
-const Navbar = () => {
-  const [q, setQ] = useState([]);
+const Navbar = (people) => {
+  const [searchedChar, setSearchedChar] = useState([]);
+  const [currentPageChar, setCurrentPageChar] = useState([]);
+  // const [q, setQ] = useState([]);
+  setCurrentPageChar(people.data);
+
+  // get the searched word,
+  {
+    // console.log(people.data);
+    console.log(searchedChar);
+  }
+
+  // loop through data.results, if searched word is found, get its url,
+
+  // if not fetch next page, search, if found render
 
   return (
     <div>
@@ -26,8 +40,8 @@ const Navbar = () => {
             <input
               class="form-control mr-sm-2"
               type="search"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
+              // value={searchedChar}
+              onChange={(e) => setSearchedChar(e.target.value)}
               placeholder="Search"
               aria-label="Search"
             />
@@ -37,6 +51,10 @@ const Navbar = () => {
           </form>
         </div>
       </nav>
+      {/* 
+      {currentPageChar.map((s) => {
+        console.log(s);
+      })} */}
     </div>
   );
 };
