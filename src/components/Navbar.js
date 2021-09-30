@@ -14,7 +14,7 @@ const Navbar = ({ characters }) => {
     console.log(charDetails);
   }
   return (
-    <div>
+    <>
       <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <button
           class="navbar-toggler navbar-dark"
@@ -74,7 +74,7 @@ const Navbar = ({ characters }) => {
                     )}
                   </div>
                 )}   */}
-    </div>
+    </>
   );
 };
 

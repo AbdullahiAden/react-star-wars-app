@@ -155,26 +155,25 @@ function App() {
         </div>
       ) : (
         characters.map((character, index) => {
-          return (
-            <div>
-              {searchedChar === character.name && (
-                <div>
-                  {console.log(character)}
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    onClick={() => {
-                      fetchSingleCharacter(characters[index].url);
-                    }}
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                  >
-                    {characters[index].name}
-                  </button>
-                </div>
-              )}
-            </div>
-          );
+          <div>
+            {searchedChar === character.name && (
+              <div>
+                {console.log(character)}
+                <p>same</p>
+                <button
+                  className="btn btn-primary"
+                  type="submit"
+                  onClick={() => {
+                    fetchSingleCharacter(characters[index].url);
+                  }}
+                  data-toggle="modal"
+                  data-target="#exampleModal"
+                >
+                  {characters[index].name}
+                </button>
+              </div>
+            )}
+          </div>;
         })
       )}
 
