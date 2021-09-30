@@ -54,7 +54,7 @@ function App() {
             <h2>Star Wars</h2>
           </a>
 
-          <form class="form-inline my-2 my-lg-0 " action="/searchedChar">
+          <form class="form-inline my-2 my-lg-0 " action="javascript:void(0)">
             <input
               class="form-control mr-sm-2"
               type="search"
@@ -63,9 +63,7 @@ function App() {
               aria-label="Search"
             />
 
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-              Search
-            </button>
+            {/* <button class="btn btn-outline-success my-2 my-sm-0">Search</button> */}
           </form>
         </div>
       </nav>
@@ -73,7 +71,7 @@ function App() {
 
       {searchedChar == "" ? (
         <div className="row">
-          {!people.results ? (
+          {!characters ? (
             <p>Loading</p>
           ) : (
             characters.map((character, index) => {
@@ -94,60 +92,8 @@ function App() {
                     >
                       {characters[index].name}
                     </button>
-
-                    <p>{character.url}</p>
                   </h2>
-
-                  <div
-                    class="modal fade"
-                    id="exampleModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">
-                            Character Details
-                          </h5>
-                          <button
-                            type="button"
-                            class="close"
-                            data-dismiss="modal"
-                            aria-label="Close"
-                            // value={character}
-                          >
-                            <span aria-hidden="true">&times;</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          <div>
-                            <h2>{charDetails.name}</h2>
-                            <strong>height</strong>
-                            <p>{charDetails.height}</p>
-                            <strong>mass</strong>
-                            <p>{charDetails.mass}</p>
-                            <strong>hair color</strong>
-                            <p>{charDetails.hair_color}</p>
-                            <strong>skin color</strong>
-                            <p>{charDetails.skin_color}</p>
-                            <p>{charDetails.url}</p>
-                          </div>
-                        </div>
-                        <div class="modal-footer">
-                          <button
-                            type="button"
-                            class="btn btn-secondary"
-                            data-dismiss="modal"
-                          >
-                            Close
-                          </button>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                  <p>{character.url}</p>
                 </div>
               );
             })
@@ -157,9 +103,8 @@ function App() {
         characters.map((character, index) => {
           return (
             <div>
-              {searchedChar === character.name && (
+              {searchedChar == character.name && (
                 <div>
-                  {console.log(character)}
                   <button
                     className="btn btn-primary"
                     type="submit"
@@ -177,59 +122,81 @@ function App() {
           );
         })
       )}
-
-      {people.previous && (
-        <button
-          type="submit"
-          onClick={() => {
-            fetchCharacters(people.previous);
-          }}
-          className="btn btn-outline-primary"
-        >
-          Previous
-        </button>
-      )}
-
-      {people.next && (
-        <button
-          type="submit"
-          onClick={() => {
-            fetchCharacters(people.next);
-          }}
-          className="btn btn-outline-primary m-2"
-        >
-          Next
-        </button>
-      )}
-      <div className="container ">
-        {/* // get the searched word, */}
-        {/* {console.log(searchedChar)} */}
-
-        {/* // loop through data.results, if searched word is found, get its url,*/}
-        {/* {characters.map((s) => {
-          // console.log(s);
-          if (searchedChar === s.name) {
-            console.log(s.url);
-            <h2>
+      <div
+        class="modal fade"
+        id="exampleModal"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">
+                Character Details
+              </h5>
               <button
-                className="btn btn-primary"
-                type="submit"
-                onClick={() => {
-                  fetchSingleCharacter(s.url);
-                }}
+                type="button"
+                class="close"
+                data-dismiss="modal"
+                aria-label="Close"
+                // value={character}
               >
-                {s.name}
+                <span aria-hidden="true">&times;</span>
               </button>
-            </h2>;
-          }
-        })} */}
-
-        {/* if not fetch next page, search, if found render */}
+            </div>
+            <div class="modal-body">
+              <div>
+                <h2>{charDetails.name}</h2>
+                <strong>height</strong>
+                <p>{charDetails.height}</p>
+                <strong>mass</strong>
+                <p>{charDetails.mass}</p>
+                <strong>hair color</strong>
+                <p>{charDetails.hair_color}</p>
+                <strong>skin color</strong>
+                <p>{charDetails.skin_color}</p>
+                <p>{charDetails.url}</p>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
+      <div>
+        {people.previous && (
+          <button
+            type="submit"
+            onClick={() => {
+              fetchCharacters(people.previous);
+            }}
+            className="btn btn-outline-primary"
+          >
+            Previous
+          </button>
+        )}
 
-      {/* <Switch>
-        <Route path="/searchedchar" component={}></Route>
-      </Switch> */}
+        {people.next && (
+          <button
+            type="submit"
+            onClick={() => {
+              fetchCharacters(people.next);
+            }}
+            className="btn btn-outline-primary m-2"
+          >
+            Next
+          </button>
+        )}
+      </div>
     </>
   );
 }
