@@ -1,4 +1,5 @@
 import { Switch, Route, Link } from "react-router-dom";
+import axios from "axios";
 import CharactersList from "./components/CharactersList";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import CharacterDetails from "./components/CharacterDetails";
@@ -6,13 +7,15 @@ import { Pagination } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Modal from "./components/Modal";
+import { objectExpression } from "@babel/types";
 
 function App() {
   const [people, setPeople] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [charDetails, setCharDetails] = useState([]);
   const [searchedChar, setSearchedChar] = useState([]);
-
+  const all = [];
+  const names = [];
   // fetch characters
   async function fetchCharacters(url) {
     const response = await fetch(url);
@@ -22,8 +25,44 @@ function App() {
     console.log(data);
   }
 
+  const fetchData = () => {
+    const page1 = " https://swapi.dev/api/people/?page=1";
+    const page2 = " https://swapi.dev/api/people/?page=2";
+
+    const getPage1 = axios.get(page1);
+    const getPage2 = axios.get(page2);
+
+    axios.all([getPage1, getPage2]).then(
+      axios.spread((...allData) => {
+        const allPage1 = allData[0];
+        const allPage2 = allData[1];
+
+        // console.log(allPage1.data);
+        // console.log(allPage2.data);
+
+        all.push(allPage1.data.results, allPage2.data.results);
+        // console.log(all);
+
+        all.map((a, index) => {
+          // console.log(a);
+          a.map((e) => {
+            console.log(e.name);
+
+            names.push(e.name.toString().toLowerCase());
+            // console.log(names);
+            // if (names.includes(searchedChar)) {
+          });
+          // ** seach by last or firstname
+          const el = names.find((z) => z.includes(searchedChar));
+          console.log(el);
+        });
+      })
+    );
+  };
   useEffect(() => {
-    fetchCharacters("https://swapi.dev/api/people");
+    fetchData();
+    // fetchCharacters("https://swapi.dev/api/people");
+    // fetchAllCharacters("https://swapi.dev/api/people");
   }, []);
 
   async function fetchSingleCharacter(singleUrl) {
@@ -100,26 +139,29 @@ function App() {
           )}
         </div>
       ) : (
-        characters.map((character, index) => {
-          return (
-            <div>
-              {searchedChar == character.name && (
-                <div>
-                  <button
-                    className="btn btn-primary"
-                    type="submit"
-                    onClick={() => {
-                      fetchSingleCharacter(characters[index].url);
-                    }}
-                    data-toggle="modal"
-                    data-target="#exampleModal"
-                  >
-                    {characters[index].name}
-                  </button>
-                </div>
-              )}
-            </div>
-          );
+        all.map((a, index) => {
+          console.log(a);
+          a.map((e) => {
+            return (
+              <div>
+                {searchedChar == e.name && (
+                  <div>
+                    <button
+                      className="btn btn-primary"
+                      type="submit"
+                      onClick={() => {
+                        fetchSingleCharacter(characters[index].url);
+                      }}
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      {characters[index].name}
+                    </button>
+                  </div>
+                )}
+              </div>
+            );
+          });
         })
       )}
       <div
