@@ -199,26 +199,22 @@ function App() {
 
           {allNames.map((e, index) => {
             // return console.log(e.name);
-            <div>
-              {e.name == searchedChar &&
-                // <button
-                //   className="btn btn-primary"
-                //   type="submit"
-                //   onClick={() => {
-                //     fetchSingleCharacter(allNames[index].url);
-                //   }}
-                //   data-toggle="modal"
-                //   data-target="#exampleModal"
-                // >
-                //   {allNames[index].name}
-                // </button>
-                console.log(allNames[index])}
-            </div>;
-
-            // allNames.filter(e == searchedChar);
+            return (
+              <div>
+                {e.name == searchedChar && (
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      fetchSingleCharacter(allNames[index].url);
+                    }}
+                    className="btn btn-primary"
+                  >
+                    {allNames[index].name}
+                  </button>
+                )}
+              </div>
+            );
           })}
-
-          {/* {console.log(allNames)} */}
         </div>
       )}
       <div
