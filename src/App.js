@@ -191,7 +191,6 @@ function App() {
           </div>
         </div>
       ) : (
-        // (searchedChar.length >= 1
         // **** search filter
 
         <div>
@@ -202,15 +201,20 @@ function App() {
             return (
               <div>
                 {e.name == searchedChar && (
-                  <button
-                    type="submit"
-                    onClick={() => {
-                      fetchSingleCharacter(allNames[index].url);
-                    }}
-                    className="btn btn-primary"
-                  >
-                    {allNames[index].name}
-                  </button>
+                  <div>
+                    <button
+                      type="submit"
+                      onClick={() => {
+                        fetchSingleCharacter(allNames[index].url);
+                      }}
+                      className="btn btn-primary"
+                      data-toggle="modal"
+                      data-target="#exampleModal"
+                    >
+                      {allNames[index].name}
+                    </button>
+                    <p>{allNames[index].url}</p>
+                  </div>
                 )}
               </div>
             );
