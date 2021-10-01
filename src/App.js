@@ -3,7 +3,7 @@ import axios from "axios";
 import CharactersList from "./components/CharactersList";
 // import "bootstrap/dist/css/bootstrap.min.css";
 import CharacterDetails from "./components/CharacterDetails";
-import { Pagination } from "semantic-ui-react";
+import { Pagination, Search } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import Navbar from "./components/Navbar";
 import Modal from "./components/Modal";
@@ -14,55 +14,81 @@ function App() {
   const [characters, setCharacters] = useState([]);
   const [charDetails, setCharDetails] = useState([]);
   const [searchedChar, setSearchedChar] = useState([]);
+  const [nextPage, setNextPage] = useState([]);
+  const [previousPage, setPreviousPage] = useState([]);
+
   const all = [];
-  const names = [];
+  const [allNames, setAllNames] = useState([]);
+  // const allNames = [];
+
   // fetch characters
+  // ** previous NOT working
   async function fetchCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
-    setPeople(data);
+    // setPeople(data);
     setCharacters(data.results);
-    console.log(data);
+    setNextPage(data.next);
+    if (data.prvious) {
+      setPreviousPage(data.prvious);
+    }
+
+    // console.log(data);
   }
 
-  const fetchData = () => {
+  async function fetchData() {
     const page1 = " https://swapi.dev/api/people/?page=1";
     const page2 = " https://swapi.dev/api/people/?page=2";
 
     const getPage1 = axios.get(page1);
     const getPage2 = axios.get(page2);
 
-    axios.all([getPage1, getPage2]).then(
-      axios.spread((...allData) => {
-        const allPage1 = allData[0];
-        const allPage2 = allData[1];
+    await axios
+      .all([getPage1, getPage2])
+      .then(
+        axios.spread((...allData) => {
+          const allPage1 = allData[0];
+          const allPage2 = allData[1];
 
-        // console.log(allPage1.data);
-        // console.log(allPage2.data);
+          // console.log(allPage2.data);
 
-        all.push(allPage1.data.results, allPage2.data.results);
-        // console.log(all);
+          all.push(allPage1.data.results.concat(allPage2.data.results));
+          // all.push(allPage1.data.results, );
+          // console.log(allPage1.data.next);
+          setPeople(all);
+          // console.log(all);
 
-        all.map((a, index) => {
-          // console.log(a);
-          a.map((e) => {
-            console.log(e.name);
-
-            names.push(e.name.toString().toLowerCase());
-            // console.log(names);
-            // if (names.includes(searchedChar)) {
+          all.map((a, index) => {
+            setAllNames(a);
+            // a.map((e) => {
+            //   // setAllNames(e);
+            // allNames.push(e.name.toString().toLowerCase());
+            // const el = names.find((z) => z.includes(searchedChar));
+            // if (allNames.includes(searchedChar)) {
+            //   console.log("---------");
+            //   // }
+            // });
           });
-          // ** seach by last or firstname
-          const el = names.find((z) => z.includes(searchedChar));
-          console.log(el);
-        });
-      })
+          console.log(allNames);
+        })
+      )
+      .catch((error) => {
+        // console.log("COULD NOT FETCH");
+        return error;
+      });
+  }
+
+  function searchNames() {
+    const un = allNames.filter((fil) =>
+      Object.values(fil).some((val) => val.includes(searchedChar))
     );
-  };
+    console.log(un);
+    return un;
+  }
+  // console.log(people);
   useEffect(() => {
     fetchData();
-    // fetchCharacters("https://swapi.dev/api/people");
-    // fetchAllCharacters("https://swapi.dev/api/people");
+    fetchCharacters("https://swapi.dev/api/people");
   }, []);
 
   async function fetchSingleCharacter(singleUrl) {
@@ -108,7 +134,7 @@ function App() {
       </nav>
       {/* Rendering characters */}
 
-      {searchedChar == "" ? (
+      {searchedChar.length <= 0 ? (
         <div className="row">
           {!characters ? (
             <p>Loading</p>
@@ -133,36 +159,67 @@ function App() {
                     </button>
                   </h2>
                   <p>{character.url}</p>
+                  {/* {console.log(people)} */}
                 </div>
               );
             })
           )}
+          <div>
+            {previousPage && (
+              <button
+                type="submit"
+                onClick={() => {
+                  fetchCharacters(previousPage);
+                }}
+                className="btn btn-outline-primary"
+              >
+                Previous
+              </button>
+            )}
+
+            {nextPage && (
+              <button
+                type="submit"
+                onClick={() => {
+                  fetchCharacters(nextPage);
+                }}
+                className="btn btn-outline-primary m-2"
+              >
+                Next
+              </button>
+            )}
+          </div>
         </div>
       ) : (
-        all.map((a, index) => {
-          console.log(a);
-          a.map((e) => {
-            return (
-              <div>
-                {searchedChar == e.name && (
-                  <div>
-                    <button
-                      className="btn btn-primary"
-                      type="submit"
-                      onClick={() => {
-                        fetchSingleCharacter(characters[index].url);
-                      }}
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                    >
-                      {characters[index].name}
-                    </button>
-                  </div>
-                )}
-              </div>
-            );
-          });
-        })
+        // (searchedChar.length >= 1
+        // **** search filter
+
+        <div>
+          {/* {allNames.find((z) => z.includes(searchedChar))} */}
+
+          {allNames.map((e, index) => {
+            // return console.log(e.name);
+            <div>
+              {e.name == searchedChar &&
+                // <button
+                //   className="btn btn-primary"
+                //   type="submit"
+                //   onClick={() => {
+                //     fetchSingleCharacter(allNames[index].url);
+                //   }}
+                //   data-toggle="modal"
+                //   data-target="#exampleModal"
+                // >
+                //   {allNames[index].name}
+                // </button>
+                console.log(allNames[index])}
+            </div>;
+
+            // allNames.filter(e == searchedChar);
+          })}
+
+          {/* {console.log(allNames)} */}
+        </div>
       )}
       <div
         class="modal fade"
@@ -214,7 +271,7 @@ function App() {
           </div>
         </div>
       </div>
-      <div>
+      {/* <div>
         {people.previous && (
           <button
             type="submit"
@@ -238,7 +295,7 @@ function App() {
             Next
           </button>
         )}
-      </div>
+      </div> */}
     </>
   );
 }
