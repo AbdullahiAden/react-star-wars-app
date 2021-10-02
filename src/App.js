@@ -1,13 +1,5 @@
-import { Switch, Route, Link } from "react-router-dom";
 import axios from "axios";
-import CharactersList from "./components/CharactersList";
-// import "bootstrap/dist/css/bootstrap.min.css";
-import CharacterDetails from "./components/CharacterDetails";
-import { Pagination, Search } from "semantic-ui-react";
 import { useEffect, useState } from "react";
-import Navbar from "./components/Navbar";
-import Modal from "./components/Modal";
-import { objectExpression } from "@babel/types";
 
 function App() {
   const [people, setPeople] = useState([]);
@@ -28,7 +20,12 @@ function App() {
     setNextPage(data.next);
     setPreviousPage(data.previous);
   }
-
+  async function fetchSingleCharacter(singleUrl) {
+    const response = await fetch(singleUrl);
+    const data = await response.json();
+    setCharDetails(data);
+    console.log(charDetails);
+  }
   async function fetchData() {
     const page1 = " https://swapi.dev/api/people/?page=1";
     const page2 = " https://swapi.dev/api/people/?page=2";
@@ -118,23 +115,12 @@ function App() {
     console.log(un);
     return un;
   }
-  // console.log(people);
   useEffect(() => {
-    // fetchCharacters("https://swapi.dev/api/people");
     fetchData();
   }, []);
 
-  async function fetchSingleCharacter(singleUrl) {
-    const response = await fetch(singleUrl);
-    const data = await response.json();
-    setCharDetails(data);
-    console.log(charDetails);
-  }
-
   return (
     <>
-      {/* <Navbar data={people} /> */}
-
       <nav class="navbar navbar-expand-lg navbar-light bg-dark">
         <button
           class="navbar-toggler navbar-dark"
@@ -160,8 +146,6 @@ function App() {
               placeholder="Search"
               aria-label="Search"
             />
-
-            {/* <button class="btn btn-outline-success my-2 my-sm-0">Search</button> */}
           </form>
         </div>
       </nav>
@@ -169,59 +153,61 @@ function App() {
 
       {searchedChar.length <= 0 ? (
         <div className="row">
-          {!characters ? (
-            <p>Loading</p>
+          {characters.length < 1 ? (
+            <h1>Loading Characters</h1>
           ) : (
-            characters.map((character, index) => {
-              return (
-                <div key={index} className="col-lg-4  shadow  p-1">
-                  {/* if there is no searched character, display all */}
+            <div>
+              {characters.map((character, index) => {
+                return (
+                  <div key={index} className="col-lg-4  shadow  p-1">
+                    {/* if there is no searched character, display all */}
 
-                  <h2>
-                    {/* *Make module pop up here, when link is clicked, which shows more  */}
-                    <button
-                      className="btn btn-primary"
-                      type="submit"
-                      onClick={() => {
-                        fetchSingleCharacter(characters[index].url);
-                      }}
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                    >
-                      {characters[index].name}
-                    </button>
-                  </h2>
-                  <p>{character.url}</p>
-                  {/* {console.log(people)} */}
-                </div>
-              );
-            })
+                    <h2>
+                      {/* *Make module pop up here, when link is clicked, which shows more details  */}
+                      <button
+                        className="btn btn-primary"
+                        type="submit"
+                        onClick={() => {
+                          fetchSingleCharacter(characters[index].url);
+                        }}
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                      >
+                        {characters[index].name}
+                      </button>
+                    </h2>
+                    <p>{character.url}</p>
+                  </div>
+                );
+              })}
+
+              <div>
+                {previousPage && (
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      fetchCharacters(previousPage);
+                    }}
+                    className="btn btn-outline-primary"
+                  >
+                    Previous
+                  </button>
+                )}
+
+                {nextPage && (
+                  <button
+                    type="submit"
+                    onClick={() => {
+                      fetchCharacters(nextPage);
+                    }}
+                    className="btn btn-outline-primary m-2"
+                  >
+                    Next
+                  </button>
+                )}
+              </div>
+            </div>
           )}
-          <div>
-            {previousPage && (
-              <button
-                type="submit"
-                onClick={() => {
-                  fetchCharacters(previousPage);
-                }}
-                className="btn btn-outline-primary"
-              >
-                Previous
-              </button>
-            )}
-
-            {nextPage && (
-              <button
-                type="submit"
-                onClick={() => {
-                  fetchCharacters(nextPage);
-                }}
-                className="btn btn-outline-primary m-2"
-              >
-                Next
-              </button>
-            )}
-          </div>
         </div>
       ) : (
         // **** search filter
