@@ -21,27 +21,34 @@ function App() {
   const [allNames, setAllNames] = useState([]);
   // const allNames = [];
 
-  // fetch characters
-  // ** previous NOT working
   async function fetchCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
-    // setPeople(data);
     setCharacters(data.results);
     setNextPage(data.next);
-    if (data.prvious) {
-      setPreviousPage(data.prvious);
-    }
-
-    // console.log(data);
+    setPreviousPage(data.previous);
   }
 
   async function fetchData() {
     const page1 = " https://swapi.dev/api/people/?page=1";
     const page2 = " https://swapi.dev/api/people/?page=2";
+    const page3 = " https://swapi.dev/api/people/?page=3";
+    const page4 = " https://swapi.dev/api/people/?page=4";
+    const page5 = " https://swapi.dev/api/people/?page=5";
+    const page6 = " https://swapi.dev/api/people/?page=6";
+    const page7 = " https://swapi.dev/api/people/?page=7";
+    const page8 = " https://swapi.dev/api/people/?page=8";
+    const page9 = " https://swapi.dev/api/people/?page=9";
 
     const getPage1 = axios.get(page1);
     const getPage2 = axios.get(page2);
+    const getPage3 = axios.get(page3);
+    const getPage4 = axios.get(page4);
+    const getPage5 = axios.get(page5);
+    const getPage6 = axios.get(page6);
+    const getPage7 = axios.get(page7);
+    const getPage8 = axios.get(page8);
+    const getPage9 = axios.get(page9);
 
     await axios
       .all([getPage1, getPage2])
@@ -49,31 +56,37 @@ function App() {
         axios.spread((...allData) => {
           const allPage1 = allData[0];
           const allPage2 = allData[1];
+          const allPage3 = allData[2];
+          const allPage4 = allData[3];
+          const allPage5 = allData[4];
+          const allPage6 = allData[5];
+          const allPage7 = allData[6];
+          const allPage8 = allData[7];
+          const allPage9 = allData[8];
 
           // console.log(allPage2.data);
+          // const combinedAllName=[...allPage1.data.results,...allPage2.data.results]
+          const combinedAllName = allPage1.data.results.concat(
+            allPage2.data.results
+            // allPage3.data.results
+          );
 
-          all.push(allPage1.data.results.concat(allPage2.data.results));
-          // all.push(allPage1.data.results, );
-          // console.log(allPage1.data.next);
+          all.push(combinedAllName);
+
           setPeople(all);
           // console.log(all);
 
+          setCharacters(allPage1.data.results);
+          setNextPage(allPage1.data.next);
+          setPreviousPage(allPage1.data.previous);
+
           all.map((a, index) => {
             setAllNames(a);
-            // a.map((e) => {
-            //   // setAllNames(e);
-            // allNames.push(e.name.toString().toLowerCase());
-            // const el = names.find((z) => z.includes(searchedChar));
-            // if (allNames.includes(searchedChar)) {
-            //   console.log("---------");
-            //   // }
-            // });
           });
           console.log(allNames);
         })
       )
       .catch((error) => {
-        // console.log("COULD NOT FETCH");
         return error;
       });
   }
@@ -87,8 +100,8 @@ function App() {
   }
   // console.log(people);
   useEffect(() => {
+    // fetchCharacters("https://swapi.dev/api/people");
     fetchData();
-    fetchCharacters("https://swapi.dev/api/people");
   }, []);
 
   async function fetchSingleCharacter(singleUrl) {
@@ -141,7 +154,7 @@ function App() {
           ) : (
             characters.map((character, index) => {
               return (
-                <div className="col-lg-4  shadow  p-1">
+                <div key={index} className="col-lg-4  shadow  p-1">
                   {/* if there is no searched character, display all */}
 
                   <h2>
