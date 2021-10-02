@@ -51,7 +51,17 @@ function App() {
     const getPage9 = axios.get(page9);
 
     await axios
-      .all([getPage1, getPage2])
+      .all([
+        getPage1,
+        getPage2,
+        getPage3,
+        getPage4,
+        getPage5,
+        getPage6,
+        getPage7,
+        getPage8,
+        getPage9,
+      ])
       .then(
         axios.spread((...allData) => {
           const allPage1 = allData[0];
@@ -65,11 +75,19 @@ function App() {
           const allPage9 = allData[8];
 
           // console.log(allPage2.data);
-          // const combinedAllName=[...allPage1.data.results,...allPage2.data.results]
-          const combinedAllName = allPage1.data.results.concat(
-            allPage2.data.results
-            // allPage3.data.results
-          );
+          const combinedAllName = [
+            ...allPage1.data.results,
+            ...allPage2.data.results,
+            ...allPage3.data.results,
+            ...allPage4.data.results,
+            ...allPage5.data.results,
+            ...allPage6.data.results,
+            ...allPage7.data.results,
+            ...allPage8.data.results,
+            ...allPage9.data.results,
+          ];
+          console.log(combinedAllName);
+          // const combinedAllName =
 
           all.push(combinedAllName);
 
@@ -83,10 +101,12 @@ function App() {
           all.map((a, index) => {
             setAllNames(a);
           });
-          console.log(allNames);
+          // console.log(allNames);
         })
       )
       .catch((error) => {
+        console.log("FETCH FAILED____");
+        <div>Fetch Failed</div>;
         return error;
       });
   }
@@ -253,7 +273,6 @@ function App() {
                 class="close"
                 data-dismiss="modal"
                 aria-label="Close"
-                // value={character}
               >
                 <span aria-hidden="true">&times;</span>
               </button>
@@ -284,31 +303,6 @@ function App() {
           </div>
         </div>
       </div>
-      {/* <div>
-        {people.previous && (
-          <button
-            type="submit"
-            onClick={() => {
-              fetchCharacters(people.previous);
-            }}
-            className="btn btn-outline-primary"
-          >
-            Previous
-          </button>
-        )}
-
-        {people.next && (
-          <button
-            type="submit"
-            onClick={() => {
-              fetchCharacters(people.next);
-            }}
-            className="btn btn-outline-primary m-2"
-          >
-            Next
-          </button>
-        )}
-      </div> */}
     </>
   );
 }
