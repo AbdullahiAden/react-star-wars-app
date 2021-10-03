@@ -16,7 +16,10 @@ const Navbar = ({ characters }) => {
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <button
+        <a class="navbar-brand text-light mx-2 " href="/">
+          <h2>Star Wars</h2>
+        </a>
+        {/* <button
           class="navbar-toggler navbar-dark"
           type="button"
           data-toggle="collapse"
@@ -26,54 +29,22 @@ const Navbar = ({ characters }) => {
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon  "></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand text-light " href="/">
-            <h2>Star Wars</h2>
-          </a>
+        </button> */}
 
-          <form class="form-inline my-2 my-lg-0 " action="/searchedChar">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              onChange={(e) => setSearchedChar(e.target.value)}
-              placeholder="Search"
-              aria-label="Search"
-            />
-
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-              Search
-            </button>
-          </form>
-        </div>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01"></div>
+        <form
+          class="form-inline my-2  my-lg-0 mx-2 "
+          action="javascript:void(0)"
+        >
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            onChange={(e) => setSearchedChar(e.target.value)}
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
       </nav>
-      {/* 
-      {currentPageChar.map((s) => {
-        console.log(s);
-      })} */}
-
-      {/* 
-         {!searchedChar && (
-                  <div>
-                    {searchedChar === character.name ? (
-                      <div>
-                        <button
-                          className="btn btn-primary"
-                          type="submit"
-                          onClick={() => {
-                            fetchSingleCharacter(characters[index].url);
-                          }}
-                          data-toggle="modal"
-                          data-target="#exampleModal"
-                        >
-                          {characters[index].name}
-                        </button>
-                      </div>
-                    ) : (
-                      <p>{searchedChar + "Not Found"}</p>
-                    )}
-                  </div>
-                )}   */}
     </>
   );
 };

@@ -1,6 +1,7 @@
 import axios from "axios";
 import Modal from "./components/Modal";
 import { useEffect, useState } from "react";
+import { Pagination } from "semantic-ui-react";
 
 function App() {
   const [characters, setCharacters] = useState([]);
