@@ -12,6 +12,7 @@ function App() {
   const all = [];
   const [allNames, setAllNames] = useState([]);
   const onlyNames = [];
+  const allUrl = [];
 
   async function fetchCharacters(url) {
     const response = await fetch(url);
@@ -24,7 +25,6 @@ function App() {
     const response = await fetch(singleUrl);
     const data = await response.json();
     setCharDetails(data);
-    console.log(charDetails);
   }
   async function fetchData() {
     const page1 = " https://swapi.dev/api/people/?page=1";
@@ -91,13 +91,20 @@ function App() {
           all.map((a, index) => {
             setAllNames(a);
           });
-          // console.log(allNames);
         })
       )
       .catch((error) => {
-        console.log("FETCH FAILED____");
         return error;
       });
+  }
+  function handleOnClick(clickedCharIndex) {
+    console.log(clickedCharIndex);
+    // get the clicked index url,
+
+    console.log(allNames[clickedCharIndex].url);
+    return fetchSingleCharacter(allNames[clickedCharIndex].url);
+
+    // fetch with fetchSingleCharacte
   }
 
   useEffect(() => {
@@ -200,20 +207,25 @@ function App() {
         <div>
           {allNames.map((names, index) => {
             onlyNames.push(names.name);
+            allUrl.push(names.url);
           })}
 
-          {/* {onlyNames.find((x) => x(searchedChar))<0 {}} */}
-          <button
-            type="submit"
-            onClick={() => {
-              fetchSingleCharacter(allNames.url);
-            }}
+          <div
             className="btn btn-primary"
-            // data-toggle="modal"
-            // data-target="#exampleModal"
+            onClick={() => {
+              // send the index of the character to handleOnClick func, which triggers fetchSingleCharacter with the correct url
+              handleOnClick(
+                onlyNames.indexOf(
+                  onlyNames.find((x) => x.includes(searchedChar))
+                )
+              );
+            }}
+            data-toggle="modal"
+            data-target="#exampleModal"
           >
             {onlyNames.find((x) => x.includes(searchedChar))}
-          </button>
+            {/* {onlyNames.filter((searched) => searched.includes(searchedChar))} */}
+          </div>
         </div>
       )}
       <div
