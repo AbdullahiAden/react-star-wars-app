@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 const Modal = (characterDetails) => {
-  console.log(characterDetails.charDetails.name);
   return (
     <div
       class="modal fade"
