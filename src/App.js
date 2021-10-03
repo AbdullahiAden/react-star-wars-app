@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function App() {
-  const [people, setPeople] = useState([]);
+  // const [people, setPeople] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [charDetails, setCharDetails] = useState([]);
   const [searchedChar, setSearchedChar] = useState([]);
@@ -11,7 +11,7 @@ function App() {
 
   const all = [];
   const [allNames, setAllNames] = useState([]);
-  // const allNames = [];
+  const onlyNames = [];
 
   async function fetchCharacters(url) {
     const response = await fetch(url);
@@ -71,7 +71,6 @@ function App() {
           const allPage8 = allData[7];
           const allPage9 = allData[8];
 
-          // console.log(allPage2.data);
           const combinedAllName = [
             ...allPage1.data.results,
             ...allPage2.data.results,
@@ -83,13 +82,7 @@ function App() {
             ...allPage8.data.results,
             ...allPage9.data.results,
           ];
-          console.log(combinedAllName);
-          // const combinedAllName =
-
           all.push(combinedAllName);
-
-          setPeople(all);
-          // console.log(all);
 
           setCharacters(allPage1.data.results);
           setNextPage(allPage1.data.next);
@@ -103,18 +96,10 @@ function App() {
       )
       .catch((error) => {
         console.log("FETCH FAILED____");
-        <div>Fetch Failed</div>;
         return error;
       });
   }
 
-  function searchNames() {
-    const un = allNames.filter((fil) =>
-      Object.values(fil).some((val) => val.includes(searchedChar))
-    );
-    console.log(un);
-    return un;
-  }
   useEffect(() => {
     fetchData();
   }, []);
@@ -210,34 +195,25 @@ function App() {
           )}
         </div>
       ) : (
-        // **** search filter
+        //  search filter
 
         <div>
-          {/* {allNames.find((z) => z.includes(searchedChar))} */}
-
-          {allNames.map((e, index) => {
-            // return console.log(e.name);
-            return (
-              <div>
-                {e.name == searchedChar && (
-                  <div>
-                    <button
-                      type="submit"
-                      onClick={() => {
-                        fetchSingleCharacter(allNames[index].url);
-                      }}
-                      className="btn btn-primary"
-                      data-toggle="modal"
-                      data-target="#exampleModal"
-                    >
-                      {allNames[index].name}
-                    </button>
-                    <p>{allNames[index].url}</p>
-                  </div>
-                )}
-              </div>
-            );
+          {allNames.map((names, index) => {
+            onlyNames.push(names.name);
           })}
+
+          {/* {onlyNames.find((x) => x(searchedChar))<0 {}} */}
+          <button
+            type="submit"
+            onClick={() => {
+              fetchSingleCharacter(allNames.url);
+            }}
+            className="btn btn-primary"
+            // data-toggle="modal"
+            // data-target="#exampleModal"
+          >
+            {onlyNames.find((x) => x.includes(searchedChar))}
+          </button>
         </div>
       )}
       <div
