@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 function App() {
-  // const [people, setPeople] = useState([]);
   const [characters, setCharacters] = useState([]);
   const [charDetails, setCharDetails] = useState([]);
   const [searchedChar, setSearchedChar] = useState([]);
@@ -14,7 +13,7 @@ function App() {
   const onlyNames = [];
   const allUrl = [];
 
-  async function fetchCharacters(url) {
+  async function fetchPageCharacters(url) {
     const response = await fetch(url);
     const data = await response.json();
     setCharacters(data.results);
@@ -98,13 +97,9 @@ function App() {
       });
   }
   function handleOnClick(clickedCharIndex) {
-    console.log(clickedCharIndex);
     // get the clicked index url,
-
-    console.log(allNames[clickedCharIndex].url);
+    // fetch with fetchSingleCharacter
     return fetchSingleCharacter(allNames[clickedCharIndex].url);
-
-    // fetch with fetchSingleCharacte
   }
 
   useEffect(() => {
@@ -114,7 +109,10 @@ function App() {
   return (
     <>
       <nav class="navbar navbar-expand-lg navbar-light bg-dark">
-        <button
+        <a class="navbar-brand text-light mx-2 " href="/">
+          <h2>Star Wars</h2>
+        </a>
+        {/* <button
           class="navbar-toggler navbar-dark"
           type="button"
           data-toggle="collapse"
@@ -124,63 +122,67 @@ function App() {
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon  "></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
-          <a class="navbar-brand text-light " href="/">
-            <h2>Star Wars</h2>
-          </a>
+        </button> */}
 
-          <form class="form-inline my-2 my-lg-0 " action="javascript:void(0)">
-            <input
-              class="form-control mr-sm-2"
-              type="search"
-              onChange={(e) => setSearchedChar(e.target.value)}
-              placeholder="Search"
-              aria-label="Search"
-            />
-          </form>
-        </div>
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo01"></div>
+        <form
+          class="form-inline my-2  my-lg-0 mx-2 "
+          action="javascript:void(0)"
+        >
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            onChange={(e) => setSearchedChar(e.target.value)}
+            placeholder="Search"
+            aria-label="Search"
+          />
+        </form>
       </nav>
       {/* Rendering characters */}
 
       {searchedChar.length <= 0 ? (
-        <div className="row">
+        <div className="container ">
           {characters.length < 1 ? (
             <h1>Loading Characters</h1>
           ) : (
-            <div>
+            <div className="row">
               {characters.map((character, index) => {
                 return (
-                  <div key={index} className="col-lg-4  shadow  p-1">
+                  <div
+                    key={index}
+                    className=" col-lg-4 shadow  p-1"
+                    type="submit"
+                    onClick={() => {
+                      fetchSingleCharacter(characters[index].url);
+                    }}
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                  >
                     {/* if there is no searched character, display all */}
 
-                    <h2>
+                    <h3>
                       {/* *Make module pop up here, when link is clicked, which shows more details  */}
-                      <button
-                        className="btn btn-primary"
-                        type="submit"
-                        onClick={() => {
-                          fetchSingleCharacter(characters[index].url);
-                        }}
-                        data-toggle="modal"
-                        data-target="#exampleModal"
+                      <div
+                      // className="btn btn-primary"
                       >
                         {characters[index].name}
-                      </button>
-                    </h2>
-                    <p>{character.url}</p>
+                      </div>
+                    </h3>
+                    <button className="btn btn-sm btn-outline-primary">
+                      View More
+                    </button>
                   </div>
                 );
               })}
 
-              <div>
+              <div className="container">
                 {previousPage && (
                   <button
                     type="submit"
                     onClick={() => {
-                      fetchCharacters(previousPage);
+                      fetchPageCharacters(previousPage);
                     }}
-                    className="btn btn-outline-primary"
+                    className="btn btn-primary"
                   >
                     Previous
                   </button>
@@ -190,9 +192,9 @@ function App() {
                   <button
                     type="submit"
                     onClick={() => {
-                      fetchCharacters(nextPage);
+                      fetchPageCharacters(nextPage);
                     }}
-                    className="btn btn-outline-primary m-2"
+                    className="btn btn-primary m-2"
                   >
                     Next
                   </button>
@@ -204,14 +206,14 @@ function App() {
       ) : (
         //  search filter
 
-        <div>
+        <div className="container shadow p-3 ">
           {allNames.map((names, index) => {
             onlyNames.push(names.name);
             allUrl.push(names.url);
           })}
 
           <div
-            className="btn btn-primary"
+            className="container "
             onClick={() => {
               // send the index of the character to handleOnClick func, which triggers fetchSingleCharacter with the correct url
               handleOnClick(
@@ -223,8 +225,11 @@ function App() {
             data-toggle="modal"
             data-target="#exampleModal"
           >
-            {onlyNames.find((x) => x.includes(searchedChar))}
-            {/* {onlyNames.filter((searched) => searched.includes(searchedChar))} */}
+            <h3>{onlyNames.find((x) => x.includes(searchedChar))}</h3>
+
+            <button className="btn btn-sm btn-outline-primary">
+              View More
+            </button>
           </div>
         </div>
       )}
@@ -262,6 +267,7 @@ function App() {
                 <p>{charDetails.hair_color}</p>
                 <strong>skin color</strong>
                 <p>{charDetails.skin_color}</p>
+                <strong>url</strong>
                 <p>{charDetails.url}</p>
               </div>
             </div>
