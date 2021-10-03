@@ -1,4 +1,5 @@
 import axios from "axios";
+import Modal from "./components/Modal";
 import { useEffect, useState } from "react";
 
 function App() {
@@ -112,17 +113,6 @@ function App() {
         <a class="navbar-brand text-light mx-2 " href="/">
           <h2>Star Wars</h2>
         </a>
-        {/* <button
-          class="navbar-toggler navbar-dark"
-          type="button"
-          data-toggle="collapse"
-          data-target="#navbarTogglerDemo01"
-          aria-controls="navbarTogglerDemo01"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span class="navbar-toggler-icon  "></span>
-        </button> */}
 
         <div class="collapse navbar-collapse" id="navbarTogglerDemo01"></div>
         <form
@@ -233,56 +223,8 @@ function App() {
           </div>
         </div>
       )}
-      <div
-        class="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog" role="document">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">
-                Character Details
-              </h5>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div>
-                <h2>{charDetails.name}</h2>
-                <strong>height</strong>
-                <p>{charDetails.height}</p>
-                <strong>mass</strong>
-                <p>{charDetails.mass}</p>
-                <strong>hair color</strong>
-                <p>{charDetails.hair_color}</p>
-                <strong>skin color</strong>
-                <p>{charDetails.skin_color}</p>
-                <strong>url</strong>
-                <p>{charDetails.url}</p>
-              </div>
-            </div>
-            <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-dismiss="modal"
-              >
-                Close
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
+
+      <Modal charDetails={charDetails} />
     </>
   );
 }
